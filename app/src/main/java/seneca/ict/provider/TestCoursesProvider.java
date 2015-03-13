@@ -15,7 +15,7 @@ import android.net.Uri;
 import android.text.TextUtils;
 import android.util.Log;
 
-public class CoursesProvider extends ContentProvider
+public class TestCoursesProvider extends ContentProvider
 {
     static final String PROVIDER_NAME =
             "seneca.ict.provider.CoursesProvider";

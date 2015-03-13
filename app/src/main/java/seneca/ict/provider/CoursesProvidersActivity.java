@@ -2,19 +2,16 @@ package seneca.ict.provider;
 
 
 import android.app.Activity;
-import android.app.ListActivity;
 import android.content.ContentValues;
 import android.content.CursorLoader;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.SimpleCursorAdapter;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -76,8 +73,29 @@ public class CoursesProvidersActivity extends Activity  {
             c = cursorLoader.loadInBackground();
         }
 
+        List<String> listViewValues = new ArrayList<String>();
+        if(c.moveToFirst()){
+            do{
+                String coursesname = c.getString(c.getColumnIndex(
+                        TestCoursesProvider._ID))+ ", " +
+                        c.getString(c.getColumnIndex(
+                                TestCoursesProvider.CODE)) + ", " +
+                        c.getString(c.getColumnIndex(
+                                TestCoursesProvider.TITLE))+ ", " +
+                        c.getString(c.getColumnIndex(TestCoursesProvider.ROOM));
 
-		if (c.moveToFirst()) {
+                // add the bookName into the bookTitles ArrayList
+                listViewValues.add(coursesname);
+            }while(c.moveToNext());
+        }
+        ListView lv = (ListView) findViewById(R.id.listView);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                R.layout.list_view,
+                listViewValues.toArray(new String[listViewValues.size()]));
+        lv.setAdapter(adapter);
+
+
+		/*if (c.moveToFirst()) {
 
 
 			do{
@@ -85,24 +103,24 @@ public class CoursesProvidersActivity extends Activity  {
 
 				Toast.makeText(this,
 						c.getString(c.getColumnIndex(
-								CoursesProvider._ID)) + ", " +
+								TestCoursesProvider._ID)) + ", " +
 								c.getString(c.getColumnIndex(
-										CoursesProvider.CODE)) + ", " +
+										TestCoursesProvider.CODE)) + ", " +
 										c.getString(c.getColumnIndex(
-												CoursesProvider.TITLE)) + ", " +
-                                                c.getString(c.getColumnIndex(CoursesProvider.ROOM)),
+												TestCoursesProvider.TITLE)) + ", " +
+                                                c.getString(c.getColumnIndex(TestCoursesProvider.ROOM)),
 											Toast.LENGTH_SHORT).show();
 
 
 			} while (c.moveToNext());
 
-		}
+		}*/
 
     }
 
     public void updateTitle() {
         ContentValues editedValues = new ContentValues();
-        editedValues.put(CoursesProvider.TITLE, "Android Tips and Tricks");
+        editedValues.put(TestCoursesProvider.TITLE, "Android Tips and Tricks");
         getContentResolver().update(
                 Uri.parse(
                         "content://seneca.ict.provider.CoursesProvider/courses/2"),

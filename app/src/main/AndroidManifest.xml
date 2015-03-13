@@ -18,7 +18,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <provider android:name="seneca.ict.provider.CoursesProvider"
+        <provider android:name=".TestCoursesProvider"
             android:authorities="seneca.ict.provider.CoursesProvider">
         </provider>            
     </application>
